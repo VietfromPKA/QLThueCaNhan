@@ -645,6 +645,7 @@ function loadDepartments() {
 function deleteDepartment(button) {
     const row = button.parentElement.parentElement;  // Lấy hàng chứa nút "Xóa"
     row.remove();  // Xóa hàng khỏi bảng
+    alert("Xóa phòng ban thành công");
 }
 // Chỉnh sửa phòng ban
 function editDepartment(button) {
@@ -683,7 +684,7 @@ function updateDepartment(button, rowIndex) {
     // Lấy bảng và dòng cần cập nhật
     const resultTable = document.getElementById("department-list-table").querySelector("table tbody");
     const row = resultTable.rows[rowIndex];  // Dùng `rowIndex` để tìm dòng đúng
-
+    alert("Sửa phòng ban thành công");
     // Cập nhật thông tin trong bảng
     row.cells[0].textContent = departmentName;
     row.cells[1].textContent = departmentHead;
@@ -712,11 +713,11 @@ function addDepartment() {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
-
+    
     // Lấy bảng hiện tại
     const resultTable = document.getElementById("department-list-table");
     const tableBody = resultTable.querySelector("table > tbody");
-
+    
     // Nếu chưa có bảng hoặc `tbody`, tạo mới
     if (!tableBody) {
         resultTable.innerHTML = `
