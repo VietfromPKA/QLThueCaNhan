@@ -33,6 +33,18 @@ function showSetReduction() {
     toggleSection("setReduction");
 }
 
+function saveReduction() {
+    const IDuser = parseInt(document.getElementById("employeeId2").value);
+    const salary = parseFloat(document.getElementById("salary2").value);
+    const dependents = parseInt(document.getElementById("dependents2").value);
+    if (isNaN(IDuser) || isNaN(salary) || isNaN(dependents)) {
+        alert("Vui lòng nhập đầy đủ và chính xác thông tin!");
+        return;
+    }
+    alert("Lưu thông tin giảm trừ thành công!");
+}
+
+
 function showMonthlyTax() {
     toggleSection("monthlyTax");
     calculateMonthlyTax();
