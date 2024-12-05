@@ -162,9 +162,7 @@ function viewEmployeeTax() {
                         </tr>
                     </table>
                 `;
-            } else {
-                alert('Không tìm thấy nhân viên với mã ID này!');
-            }
+            } 
 
         })
         .catch(error => {
@@ -241,42 +239,51 @@ function calculateTestTax() {
     `;
 }
 
-//tính thuế 1 năm
+// Tính thuế hàng tháng
 function calculateMonthlyTax() {
     const salary = parseFloat(document.getElementById("salary").value);
-    const dependents = parseInt(document.getElementById("dependents").value);
+    const dependentsInput = document.getElementById("dependents").value;
+    const dependents = parseInt(dependentsInput) || 0; // Mặc định là 0 nếu không nhập hoặc nhập sai
     const name = document.getElementById("name").value;
     const position = document.getElementById("position").value;
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
 
-
-
     const exemptionForSelf = 11000000; // Giảm trừ gia cảnh cho bản thân
     const exemptionPerDependent = 4400000; // Giảm trừ cho mỗi người phụ thuộc
 
-    // Tính tổng giảm trừ và thu nhập chịu thuế
+    // Tính thu nhập chịu thuế
     const totalExemption = exemptionForSelf + (exemptionPerDependent * dependents);
     const taxableIncome = salary - totalExemption;
 
-    // Tính thuế thu nhập cá nhân theo biểu thuế lũy tiến
+    if (taxableIncome <= 0) {
+        alert("Thu nhập không đủ để tính thuế.");
+        const taxMessage = document.getElementById("taxMessage");
+        taxMessage.style.display = "block"; // Hiển thị thông báo
+        taxMessage.innerText = "Thu nhập không đủ để tính thuế."; // Cập nhật nội dung thông báo
+        return;
+    }
+    
+
+    // Khai báo các mức thuế lũy tiến theo Cách 2
     let taxAmount = 0;
-    if (taxableIncome > 0) {
-        if (taxableIncome <= 5000000) {
-            taxAmount = taxableIncome * 0.05;
-        } else if (taxableIncome <= 10000000) {
-            taxAmount = taxableIncome * 0.1 - 250000;
-        } else if (taxableIncome <= 18000000) {
-            taxAmount = taxableIncome * 0.15 - 750000;
-        } else if (taxableIncome <= 32000000) {
-            taxAmount = taxableIncome * 0.2 - 1650000;
-        } else if (taxableIncome <= 52000000) {
-            taxAmount = taxableIncome * 0.25 - 3250000;
-        } else if (taxableIncome <= 80000000) {
-            taxAmount = taxableIncome * 0.3 - 5850000;
-        } else {
-            taxAmount = taxableIncome * 0.35 - 9850000;
-        }
+    alert("Thuế đã được tính xong.");
+
+    if (taxableIncome <= 5000000) {
+        
+        taxAmount = taxableIncome * 0.05;
+    } else if (taxableIncome <= 10000000) {
+        taxAmount = taxableIncome * 0.1 - 250000;
+    } else if (taxableIncome <= 18000000) {
+        taxAmount = taxableIncome * 0.15 - 750000;
+    } else if (taxableIncome <= 32000000) {
+        taxAmount = taxableIncome * 0.2 - 1650000;
+    } else if (taxableIncome <= 52000000) {
+        taxAmount = taxableIncome * 0.25 - 3250000;
+    } else if (taxableIncome <= 80000000) {
+        taxAmount = taxableIncome * 0.3 - 5850000;
+    } else {
+        taxAmount = taxableIncome * 0.35 - 9850000;
     }
 
     // Cập nhật giao diện hiển thị kết quả
